@@ -1,0 +1,6 @@
+*.swm
+*.swn
+*.swp
+*.swo
+.rvmrc
+pkg/*
