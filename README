@@ -1,0 +1,2 @@
+This script allows a job on a local instance of Jenkins to invoke a job on a remote instance of Jenkins.
+The local job will only pass when the remote job passes.
