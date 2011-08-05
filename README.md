@@ -14,6 +14,8 @@ Usage
 -----
 
 Create a new free-style software project.
+
 Add a build step, and enter the following command:
 `remote_jenkins_job <remote-job-url> <username> <password>`
+
 (username and password are optional - only required if your remote jenkins is password protected using HTTP Basic Authentication)
