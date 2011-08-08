@@ -4,3 +4,4 @@
 *.swo
 .rvmrc
 pkg/*
+coverage
