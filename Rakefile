@@ -21,7 +21,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "remote_jenkins_job"
-  s.version           = "0.0.1"
+  s.version           = "1.0.0"
   s.summary           = "Inovkes a job on a remote jenkins server"
   s.description       = "Inovkes a job on a remote jenkins server"
   s.author            = "Alkesh Vaghmaria"

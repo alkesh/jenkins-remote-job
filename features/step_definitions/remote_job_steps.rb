@@ -20,8 +20,8 @@ end
 
 When /^the remote job that requires basic authentication is set to pass$/ do
   stub_request(:get, "https://myuser:mypassword@remote.example.com/job/foo/api/json").
-    to_return(:body => %({"lastBuild":{"number":1,"url":"https://myuser:mypassword@remote.example.com/job/foo/1/"}})).times(2).then.
-    to_return(:body => %({"lastBuild":{"number":2,"url":"https://myuser:mypassword@remote.example.com/job/foo/2/"}}))
+    to_return(:body => %({"lastBuild":{"number":1,"url":"https://remote.example.com/job/foo/1/"}})).times(2).then.
+    to_return(:body => %({"lastBuild":{"number":2,"url":"https://remote.example.com/job/foo/2/"}}))
   @remote_build_request = stub_request(:post, "https://myuser:mypassword@remote.example.com/job/foo/build")
   stub_request(:get, "https://myuser:mypassword@remote.example.com/job/foo/2/api/json").
     to_return(:body => %({"building":true})).times(2).then.
