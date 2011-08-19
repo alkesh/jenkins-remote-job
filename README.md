@@ -4,6 +4,8 @@ Remote Jenkins Job
 This script allows a job on a local instance of [Jenkins](http://jenkins-ci.org) to invoke a job on a remote instance of Jenkins.
 The local job will only pass when the remote job passes.
 
+This script has only been tested with ruby 1.9.2
+
 Installation
 ------------
 
