@@ -1,14 +1,20 @@
-require 'net/http'
+require 'json'
+require 'net/https'
 require 'open-uri'
 require 'uri'
 
 class RemoteJenkinsJob
-  def initialize *params
+  def initialize params=[]
     if params.empty?
       puts "Usage: remote_jenkins_job [job uri] ([username] [password])"
     else
       @job_uri = params[0]
-      @options = {}
+      if params[1]
+        @basic_auth = [params[1], params[2]]
+        @options = {:http_basic_authentication => @basic_auth}
+      else
+        @options = {}
+      end
       start
     end
   end
@@ -19,7 +25,8 @@ class RemoteJenkinsJob
     puts "Running remote job: #{@job_uri}"
     original_last_build = get_last_build
     puts "Last build was: " + original_last_build['url'].to_s
-    Net::HTTP.post_form(URI.parse('http://remote.example.com/job/foo/build'),{})
+
+    post_build_request
 
     last_build = original_last_build
     while last_build == original_last_build do
@@ -48,6 +55,17 @@ class RemoteJenkinsJob
   end
 
   def get_new_build(url)
-    JSON.parse(open(url+"api/json", @options).read)
+    uri = URI.parse(url+'api/json')
+    uri.userinfo=''
+    JSON.parse(open(uri.to_s, @options).read)
+  end
+
+  def post_build_request
+    url = URI.parse(@job_uri+'/build')
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true if url.scheme == 'https'
+    request = Net::HTTP::Post.new(url.request_uri)
+    request.basic_auth @basic_auth[0], @basic_auth[1] if @basic_auth
+    http.request(request)
   end
 end

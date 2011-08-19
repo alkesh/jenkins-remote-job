@@ -38,3 +38,16 @@ Feature: Remote Jenkins Job script
     And the exit status should be 1
 
   Scenario: Passing basic authentication credentials
+    When the remote job that requires basic authentication is set to pass
+    And I run remote_jenkins_job with arguments: https://remote.example.com/job/foo myuser mypassword
+    Then the remote build should be invoked
+    And the output should contain:
+      """
+      Running remote job: https://remote.example.com/job/foo
+      Last build was: https://remote.example.com/job/foo/1/
+      ..
+      New build started: https://remote.example.com/job/foo/2/
+      ..
+      Build result: SUCCESS
+      """
+    And the exit status should be 0
