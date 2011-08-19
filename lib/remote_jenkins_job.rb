@@ -38,6 +38,8 @@ class RemoteJenkinsJob
 
     puts ""
     puts "Build result: " + latest_build['result']
+
+    exit(1) unless latest_build['result'] == 'SUCCESS'
   end
 
   def get_last_build
