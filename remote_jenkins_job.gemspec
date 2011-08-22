@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{remote_jenkins_job}
-  s.version = "1.0.0"
+  s.version = "1.0.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Alkesh Vaghmaria"]
-  s.date = %q{2011-08-19}
+  s.date = %q{2011-08-22}
   s.default_executable = %q{remote_jenkins_job}
   s.description = %q{Inovkes a job on a remote jenkins server}
   s.email = %q{alkesh.vaghmaria@bt.com}

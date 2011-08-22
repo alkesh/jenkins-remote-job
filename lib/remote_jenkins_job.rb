@@ -61,11 +61,14 @@ class RemoteJenkinsJob
   end
 
   def post_build_request
+    proxy_uri = URI.parse(ENV['http_proxy']) if ENV['http_proxy']
+    proxy_host, proxy_port = proxy_uri.host, proxy_uri.port if ENV['http_proxy']
     url = URI.parse(@job_uri+'/build')
-    http = Net::HTTP.new(url.host, url.port)
-    http.use_ssl = true if url.scheme == 'https'
-    request = Net::HTTP::Post.new(url.request_uri)
-    request.basic_auth @basic_auth[0], @basic_auth[1] if @basic_auth
-    http.request(request)
+    use_ssl = true if url.scheme == 'https'
+    Net::HTTP::Proxy(proxy_host, proxy_port).start(url.host, url.port, :use_ssl => use_ssl) do |http|
+      request = Net::HTTP::Post.new(url.request_uri)
+      request.basic_auth @basic_auth[0], @basic_auth[1] if @basic_auth
+      http.request(request)
+    end
   end
 end

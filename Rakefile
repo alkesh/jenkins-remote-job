@@ -3,13 +3,21 @@ require "rubygems/package_task"
 require "rdoc/task"
 require "cucumber/rake/task"
 
-task :default => [:cucumber, :package] do
-  puts "Don't forget to write some tests!"
-end
+task :default => [:cucumber_with_proxy, :cucumber_without_proxy, :package]
 
 Cucumber::Rake::Task.new :cucumber do |t|
-  t.fork = false
+  t.fork = true
   t.cucumber_opts = %w{features --format progress}
+end
+
+task :cucumber_with_proxy do
+  ENV['http_proxy']='http://proxy.example.com:8080'
+  Rake::Task['cucumber'].execute
+end
+
+task :cucumber_without_proxy do
+  ENV['http_proxy']=nil
+  Rake::Task['cucumber'].execute
 end
 
 # This builds the actual gem. For details of what all these options
@@ -21,7 +29,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "remote_jenkins_job"
-  s.version           = "1.0.0"
+  s.version           = "1.0.1"
   s.summary           = "Inovkes a job on a remote jenkins server"
   s.description       = "Inovkes a job on a remote jenkins server"
   s.author            = "Alkesh Vaghmaria"

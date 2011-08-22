@@ -28,6 +28,10 @@ When /^the remote job that requires basic authentication is set to pass$/ do
     to_return(:body => %({"building":false, "result":"SUCCESS"}))
 end
 
+When /^a remote job that needs to be accessed via a proxy is set to pass$/ do
+  ENV['http_proxy']='http://proxy.example.com:8080'
+end
+
 Then /^the remote build should be invoked$/ do
   @remote_build_request.should have_been_requested
 end
