@@ -32,6 +32,7 @@ class RemoteJenkinsJob
     while last_build == original_last_build do
       last_build = get_last_build
       print '.'
+      $stdout.flush
       sleep 1
     end
 
@@ -40,6 +41,7 @@ class RemoteJenkinsJob
 
     while (latest_build = get_new_build(last_build['url']))['building'] do
       print '.'
+      $stdout.flush
       sleep 1
     end
 
